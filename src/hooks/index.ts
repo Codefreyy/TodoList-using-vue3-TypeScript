@@ -1,13 +1,19 @@
 import { Store, useStore } from "vuex";
-import { SET_TODO, SET_TODO_LIST } from "@/store/actionType";
+import {
+    SET_TODO,
+    SET_TODO_LIST,
+    REMOVE_TODO,
+    SET_TODO_STATUS,
+    SET_DOING
+} from "@/store/actionType";
 import { ITodo, TODO_STATUS } from "@/typings";
 
 interface IUseTodo {
     setTodo: (value: string) => void;
     setTodoList: () => void;
-    removeTodo: () => void;
-    setStatus: () => void;
-    setDoing: () => void;
+    removeTodo: (id: number) => void;
+    setStatus: (id: number) => void;
+    setDoing: (id: number) => void;
 }
 function useTodo(): IUseTodo {
     const store: Store<any> = useStore()
@@ -26,25 +32,34 @@ function useTodo(): IUseTodo {
 
     function setTodoList() {
         store.dispatch(SET_TODO_LIST, todoList)
-        console.log('storestatelist', store.state.list)
     }
 
 
-    function removeTodo() {
+    function removeTodo(id: number): void {
+        store.dispatch(REMOVE_TODO, id)
+        setLocalList(store.state.list)
+    }
+
+    function setStatus(id: number) {
+        store.dispatch(SET_TODO_STATUS, id)
+        setLocalList(store.state.list)
+
 
     }
 
-    function setStatus() {
-
-    }
-
-    function setDoing() {
+    function setDoing(id: number) {
+        store.dispatch(SET_DOING, id)
+        setLocalList(store.state.list)
 
     }
 
 
     return {
-        setTodo, setTodoList, removeTodo, setStatus, setDoing
+        setTodo,
+        setTodoList,
+        removeTodo,
+        setStatus,
+        setDoing
     }
 }
 
