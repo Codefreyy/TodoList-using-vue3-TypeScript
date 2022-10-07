@@ -30,5 +30,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
+input {
+    margin-bottom: 20px;
+    width: 300px;
+    height: 20px;
+}
 </style>

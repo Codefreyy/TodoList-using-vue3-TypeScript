@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Todo List</h3>
     <todo-input></todo-input>
     <todo-list :todoList="todoList"></todo-list>
   </div>

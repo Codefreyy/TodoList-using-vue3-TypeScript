@@ -1,13 +1,18 @@
 <template>
-    <div>
-        <input type="checkbox" :checked="item.status === FINISHED" @click="setStatus(item.id)">
+    <div class="item-wrap">
+        <div>
+            <input type="checkbox" :checked="item.status === FINISHED" @click="setStatus(item.id)">
+        </div>
+        <span :class="item.status === FINISHED ? 'line-through' : ''" class="content">
+            {{item.content}}
+        </span>
+        <div class="button-wrap">
+            <button @click="removeTodo(item.id)">删除</button>
+            <button v-if="item.status !== FINISHED" @click="setDoing(item.id)"
+                :class="item.status === DOING ? 'doing' : 'willdo'">{{item.status === DOING ? '正在做...': '马上做'}}</button>
+        </div>
+
     </div>
-    <span :class="item.status === FINISHED ? 'line-through' : ''">
-        {{item.content}}
-    </span>
-    <button @click="removeTodo(item.id)">删除</button>
-    <button v-if="item.status !== FINISHED" @click="setDoing(item.id)"
-        :class="item.status === DOING ? 'doing' : 'willdo'">{{item.status === DOING ? '正在做...': '马上做'}}</button>
 </template>
 <script lang=ts>
 import { defineComponent, PropType } from 'vue';
@@ -65,5 +70,34 @@ export default defineComponent({
 .willdo {
     background-color: orange;
     color: #FFF
+}
+
+.item-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+
+    .content {
+        font-size: 14px;
+        min-width: 20px;
+
+    }
+
+    .button-wrap {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        button {
+            height: 30px;
+            line-height: 14px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+        }
+    }
 }
 </style>
